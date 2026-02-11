@@ -38,7 +38,8 @@ uv run --project ops kb new --kind note --domain dev --scope cross --summary "..
 ```
 
 8. `kb new` は内部で `git add -A` → `git commit` → `git push` まで実行する
-9. 必要なら `uv run --project ops kb lint` を実行して整合性を確認する
+9. `related` を設定した場合は `uv run --project ops kb organize` を実行して Obsidian 向け自動リンクブロックを生成する
+10. 必要なら `uv run --project ops kb lint` を実行して整合性を確認する
 
 ## 手順（更新）
 
@@ -47,6 +48,7 @@ uv run --project ops kb new --kind note --domain dev --scope cross --summary "..
 3. 対象ノートを特定（`kb-search` の要領）
 4. 本文を追記/修正
 5. `summary` と `tags` を見直して更新（必要なら `related` も追加）
-6. `uv run --project ops kb lint`
-7. `git add -A` → `git commit -m "ナレッジを更新"`（内容に合わせて具体化）
-8. `git push`
+6. `related` を追加・変更した場合は `uv run --project ops kb organize` を実行して Obsidian 向け自動リンクブロックを再生成する
+7. `uv run --project ops kb lint`
+8. `git add -A` → `git commit -m "ナレッジを更新"`（内容に合わせて具体化）
+9. `git push`
