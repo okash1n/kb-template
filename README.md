@@ -43,17 +43,7 @@ bash ops/setup.sh
 
 #### Cursor / Windsurf など他のツールで使う場合
 
-各ツールの規約ファイル配置先に `AGENTS.md` をシンボリックリンクすればよい。
-
-```bash
-# Cursor の例
-ln -sf ~/kb/AGENTS.md ~/kb/.cursorrules
-
-# Windsurf の例
-ln -sf ~/kb/AGENTS.md ~/kb/.windsurfrules
-```
-
-スキルの仕組みがないツールでも、規約ファイルを読み込ませることでナレッジベースの構造やルールを理解させられる。
+Cursor や Windsurf は `AGENTS.md` を認識するため、kb リポジトリをプロジェクトとして開けば規約は自動的に読み込まれる。ただし、スキル（kb-search 等）の仕組みには対応していないため、CLI 経由で操作する。
 
 #### Claude Desktop / claude.ai から使う場合
 
