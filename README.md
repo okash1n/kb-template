@@ -2,7 +2,7 @@
 
 `git + ripgrep + LLM推論` で運用する個人ナレッジベースのテンプレート。
 
-RAGサーバーやベクトルDBを使わず、Anthropicが提唱する「エージェンティック検索」の思想に沿った設計。Claude Code、Codex、Gemini CLIなど複数のAIコーディングツールで横断的に利用できる。Obsidian Vault としても機能し、GUI での閲覧・編集と AI による検索・整理を両立できる。
+RAGサーバーやベクトルDBを使わず、Anthropicが提唱する「エージェンティック検索」の思想に沿った設計。Claude Code、Codex、Gemini CLIなど複数のAIコーディングツールで横断的に利用できる。Obsidian Vault としても機能し、GUI での閲覧とグラフビューによるノート間の関連可視化が可能。ノートの追加・編集は AI ツールや CLI が担い、Obsidian はビューアとして併用する設計。
 
 ## セットアップ
 
@@ -57,7 +57,9 @@ filesystem MCP サーバー経由で `~/kb` を公開することを推奨する
 
 `notes/` ディレクトリを Obsidian Vault として開く。Vault 設定（`.obsidian/`）は `.gitignore` されるため、マシンごとに異なる設定を持てる。
 
-Obsidian で書く場合は `notes/drafts/` に下書きを作成し、内容が固まったら **kb-update** スキルで正式なノートとして取り込む（frontmatter の付与、適切なディレクトリへの配置、git commit/push まで自動で行われる）。`drafts/` は lint/organize の対象外なので、形式を気にせず自由に書ける。
+Obsidian はナレッジの**閲覧・検索ビューア**として利用する。グラフビューでノート間の関連を可視化したり、タグやリンクでナレッジを辿るのに適している。正式なノートの追加・編集は AI ツールや CLI 経由で行う（frontmatter の整合性や git 管理が保たれるため）。
+
+Obsidian 上で書きたい場合は `notes/drafts/` に下書きを作成し、内容が固まったら **kb-update** スキルで正式に取り込む。`drafts/` は lint/organize の対象外なので、形式を気にせず自由に書ける。
 
 ### 5. GitHub Actions を設定（任意）
 
