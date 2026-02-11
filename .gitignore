@@ -1,5 +1,8 @@
 .DS_Store
 
+# Obsidian
+notes/.obsidian/
+
 # Python
 __pycache__/
 *.py[cod]
@@ -8,9 +11,6 @@ __pycache__/
 
 # uv / venv
 .venv/
-
-# Obsidian
-notes/.obsidian/
 
 # Optional local caches
 .cache/

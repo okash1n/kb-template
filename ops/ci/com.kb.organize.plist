@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  macOS launchd 用の KB 自動整理設定
+  配置: cp ops/ci/com.kb.organize.plist ~/Library/LaunchAgents/
+  有効化: launchctl load ~/Library/LaunchAgents/com.kb.organize.plist
+  無効化: launchctl unload ~/Library/LaunchAgents/com.kb.organize.plist
+  手動実行: launchctl start com.kb.organize
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.kb.organize</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>-l</string>
+    <string>-c</string>
+    <string>exec $HOME/kb/ops/ci/scheduled-organize.sh</string>
+  </array>
+  <key>StartInterval</key>
+  <integer>43200</integer>
+  <key>StandardOutPath</key>
+  <string>/tmp/kb-organize.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/kb-organize.err.log</string>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/usr/local/bin:/usr/bin:/bin:/opt/homebrew/bin</string>
+  </dict>
+</dict>
+</plist>

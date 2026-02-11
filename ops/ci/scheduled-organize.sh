@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
+# ローカル cron / launchd から呼び出す KB 自動整理スクリプト
+# claude -p によるヘッドレス実行で、LLM推論による整理を行う
 set -euo pipefail
 
-OPS_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-REPO_ROOT="$(cd "$OPS_ROOT/.." && pwd)"
-LOG_FILE="ops/automation/organize-schedule.log"
+REPO_ROOT="${KB_REPO_ROOT:-$HOME/kb}"
+LOG_FILE="${REPO_ROOT}/ops/automation/organize-schedule.log"
 WATCH_PATHS=("notes" "ops/rules/kb.rules.yml")
 
 cd "$REPO_ROOT"
@@ -33,16 +34,6 @@ append_log() {
     "$base_sha" >> "$LOG_FILE"
 }
 
-commit_and_push_log() {
-  local message="$1"
-  git add "$LOG_FILE"
-  if git diff --cached --quiet; then
-    return 0
-  fi
-  git commit -m "$message"
-  git push origin HEAD:main
-}
-
 ensure_main_branch() {
   local branch
   branch="$(git rev-parse --abbrev-ref HEAD)"
@@ -62,16 +53,24 @@ main() {
   if [[ -n "$base_sha" ]]; then
     if git diff --quiet "$base_sha"..HEAD -- "${WATCH_PATHS[@]}"; then
       append_log "skipped" "no-updates-since-last-organize" "$base_sha"
-      commit_and_push_log "organizeをスキップ: 変更なし [organize-auto]"
+      git add "$LOG_FILE"
+      if ! git diff --cached --quiet; then
+        git commit -m "organizeをスキップ: 変更なし [organize-auto]"
+        git push origin HEAD:main
+      fi
       exit 0
     fi
   fi
 
-  uv run --project ops kb organize
+  cat ops/skills/kb-organize/SKILL.md | claude -p \
+    --allowedTools "Bash(git:*),Bash(uv:*),Read,Write,Edit,Glob,Grep"
 
-  # kb organize is responsible for its own commit/push.
   append_log "executed" "organize-ran" "${base_sha:-none}"
-  commit_and_push_log "organize実行ログを記録 [organize-auto]"
+  git add "$LOG_FILE"
+  if ! git diff --cached --quiet; then
+    git commit -m "organize実行ログを記録 [organize-auto]"
+    git push origin HEAD:main
+  fi
 }
 
 main "$@"

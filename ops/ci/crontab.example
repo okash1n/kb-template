@@ -1,0 +1,4 @@
+# Linux 用 KB 自動整理 crontab 設定例
+# 適用: crontab -e で以下を追記
+# 12時間ごとに実行（0:00, 12:00 UTC）
+0 */12 * * * $HOME/kb/ops/ci/scheduled-organize.sh >> /tmp/kb-organize.out.log 2>> /tmp/kb-organize.err.log
