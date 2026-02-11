@@ -61,6 +61,14 @@ Obsidian はナレッジの**閲覧・検索ビューア**として利用する�
 
 Obsidian 上で書きたい場合は `notes/drafts/` に下書きを作成し、内容が固まったら **kb-update** スキルで正式に取り込む。`drafts/` は lint/organize の対象外なので、形式を気にせず自由に書ける。
 
+取り込み例（Claude Code に指示する場合）:
+
+```
+notes/drafts/my-research.md を kb-update で取り込んで
+```
+
+kb-update が下書きの内容を読み取り、kind/domain の判定、frontmatter の付与、適切なディレクトリへの配置、git commit/push までを一括で行う。
+
 ### 5. GitHub Actions を設定（任意）
 
 `.github/workflows/organize.yml` の `GIT_AUTHOR_NAME` / `GIT_AUTHOR_EMAIL` / `GIT_COMMITTER_NAME` / `GIT_COMMITTER_EMAIL` を自分の情報に書き換える。
