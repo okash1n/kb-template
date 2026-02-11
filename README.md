@@ -8,7 +8,7 @@ RAGサーバーやベクトルDBを使わず、Anthropicが提唱する「エー
 
 ### 1. リポジトリを作成
 
-GitHub で「Use this template」をクリックしてリポジトリを作成するか、手動でクローンする。
+GitHub で「Use this template」をクリックして**プライベートリポジトリ**として作成することを推奨する。個人ナレッジには業務情報や個人的なメモが含まれるため、公開リポジトリでの運用は避けるべき。
 
 ```bash
 git clone <your-repo-url> ~/kb
