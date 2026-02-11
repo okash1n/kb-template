@@ -69,11 +69,26 @@ notes/drafts/my-research.md を kb-update で取り込んで
 
 kb-update が下書きの内容を読み取り、kind/domain の判定、frontmatter の付与、適切なディレクトリへの配置、git commit/push までを一括で行う。
 
-### 5. GitHub Actions を設定（任意）
+### 5. 自動整理を設定（任意）
 
-`.github/workflows/organize.yml` の `GIT_AUTHOR_NAME` / `GIT_AUTHOR_EMAIL` / `GIT_COMMITTER_NAME` / `GIT_COMMITTER_EMAIL` を自分の情報に書き換える。
+`claude -p` によるヘッドレス実行で、LLM推論による自動整理を定期実行できる。`ops/ci/scheduled-organize.sh` が変更検知・整理実行・ログ記録を行う。
 
-このワークフローは12時間ごとに `kb organize` を自動実行し、配置の整合やメタデータの補完を行う。
+#### macOS（launchd）
+
+```bash
+cp ops/ci/com.kb.organize.plist ~/Library/LaunchAgents/
+launchctl load ~/Library/LaunchAgents/com.kb.organize.plist
+```
+
+#### Linux（cron）
+
+```bash
+crontab -e
+# 以下を追記（12時間ごとに実行）
+0 */12 * * * $HOME/kb/ops/ci/scheduled-organize.sh >> /tmp/kb-organize.out.log 2>> /tmp/kb-organize.err.log
+```
+
+> 自動整理を実行するマシンは1台に限定すること（git 競合の防止）。
 
 ## 使い方
 
@@ -124,7 +139,7 @@ uv run --project ops kb resolve <ULID>
 │   ├── rules/             # ルール定義
 │   ├── skills/            # AIツール向けスキル
 │   ├── tests/             # テスト
-│   ├── ci/                # CI スクリプト
+│   ├── ci/                # 自動整理スクリプト・スケジューラ設定
 │   └── docs/              # 設計ドキュメント
 ├── AGENTS.md              # AIツール向け規約
 ├── CLAUDE.md -> AGENTS.md
