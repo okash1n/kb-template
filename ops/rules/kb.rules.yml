@@ -1,0 +1,88 @@
+version: 1
+
+timezone: Asia/Tokyo
+timestamp:
+  precision: minute
+  example: "2026-02-10T23:15+09:00"
+
+note_dirs:
+  - notes/inbox
+  - notes/dev
+  - notes/infra
+  - notes/ai
+  - notes/security
+  - notes/tools
+  - notes/product
+  - notes/life
+  - notes/patterns
+
+domains:
+  - dev
+  - infra
+  - ai
+  - security
+  - tools
+  - product
+  - life
+  - cross
+
+kinds:
+  - inbox
+  - note
+  - research
+  - decision
+  - troubleshoot
+  - howto
+  - pattern
+
+placement:
+  inbox_dir: notes/inbox
+  patterns_dir: notes/patterns
+  domain_dir_map:
+    dev: notes/dev
+    infra: notes/infra
+    ai: notes/ai
+    security: notes/security
+    tools: notes/tools
+    product: notes/product
+    life: notes/life
+
+naming:
+  file_template: "{slug}--{id}.md"
+  slug:
+    strategy: kind
+    mutable: false
+
+frontmatter:
+  required:
+    - id
+    - kind
+    - domain
+    - created
+    - updated
+    - summary
+  optional:
+    - scope
+    - created_by
+    - created_os
+    - title
+    - tags
+    - related
+  scope:
+    allowed:
+      - cross
+      - os-specific
+  created_os:
+    allowed:
+      - macos
+      - linux
+      - windows
+      - other
+  id:
+    type: ulid
+    case: upper
+  tags:
+    normalize: true
+    allowed: "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+  related:
+    type: ulid_list
