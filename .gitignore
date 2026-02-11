@@ -9,6 +9,9 @@ __pycache__/
 # uv / venv
 .venv/
 
+# Obsidian
+notes/.obsidian/
+
 # Optional local caches
 .cache/
 .ruff_cache/
