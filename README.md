@@ -49,6 +49,10 @@ Cursor や Windsurf は `AGENTS.md` を認識するため、kb リポジトリ�
 
 filesystem MCP サーバー経由で `~/kb` を公開することを推奨する。これにより、Claude Desktop や claude.ai の Projects からもナレッジベースの読み書きが可能になる。
 
+ノートを新規追加する場合は、まず `notes/drafts/` にファイルを作成し、あとから Claude Code 等の **kb-update** スキルで正式に取り込む運用を推奨する。kb-update が frontmatter の付与、適切なディレクトリへの配置、git commit/push を一括で行うため、追加履歴が Git で管理される。
+
+例: Claude Desktop でリサーチした結果を `notes/drafts/my-research.md` に保存 → Claude Code で kb-update を実行 → 現在のルールに従って分類・配置される。
+
 ### 4. Obsidian を設定（任意）
 
 `notes/` ディレクトリを Obsidian Vault として開く。Vault 設定（`.obsidian/`）は `.gitignore` されるため、マシンごとに異なる設定を持てる。
